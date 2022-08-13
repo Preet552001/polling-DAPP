@@ -30,11 +30,15 @@ contract polls_DAPP{
         pollIdCount = 0;
     }
 
+    //This function is to create new poll
+    //Input :- title for poll and description for poll
     function createPoll(string calldata _title, string calldata _description) external{
         pollIdCount++;
         polls[pollIdCount]=poll(pollIdCount,_title,_description,msg.sender,0,0);
     }
 
+    //This function is to create new poll options in that poll id
+    //Input :- poll id and new poll option
     function addPollOptions(uint _id,string calldata _name) external{
         require(polls[_id].creator == msg.sender,"User is Not the person to creat the poll");
         uint8 count = polls[_id].optionCount;
@@ -43,6 +47,8 @@ contract polls_DAPP{
         polls[_id].optionCount=count;
     }
 
+    //This function is to vote for the polls
+    //Input :- poll Id and option number
     function voting(uint _id, uint _option) external{
         require(user[_id][msg.sender] == false,"User has Voted For this Poll");
         user[_id][msg.sender]=true;
